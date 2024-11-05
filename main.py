@@ -20,8 +20,12 @@ def initialize_session_state():
 def toggle_theme():
     """Toggle between light and dark theme"""
     st.session_state.theme = 'dark' if st.session_state.theme == 'light' else 'light'
+    st.experimental_set_query_params(theme=st.session_state.theme)
 
 def main():
+    # Initialize session state
+    initialize_session_state()
+    
     # Set page config must be the first Streamlit command
     st.set_page_config(
         page_title="Website Cost Estimator",
@@ -29,70 +33,24 @@ def main():
         layout="wide"
     )
 
-    # Initialize session state
-    initialize_session_state()
-
-    # Custom CSS for theme toggle button positioning and dark mode
+    # Custom CSS for theme toggle button positioning
     st.markdown("""
         <style>
-        .theme-toggle {
-            position: fixed;
-            top: 14px;
-            right: 48px;
-            z-index: 999999;
-        }
-        
-        /* Dark mode styles */
-        .stApp[data-theme="dark"] {
-            background-color: #262730;
-        }
-        /* Make all text white in dark mode */
-        .stApp[data-theme="dark"] * {
-            color: #FFFFFF;
-        }
-        /* Specific rules for different text elements */
-        .stApp[data-theme="dark"] .stMarkdown,
-        .stApp[data-theme="dark"] .stMarkdown p,
-        .stApp[data-theme="dark"] .stText,
-        .stApp[data-theme="dark"] .stMetric,
-        .stApp[data-theme="dark"] .stWrite,
-        .stApp[data-theme="dark"] .element-container,
-        .stApp[data-theme="dark"] .stSubheader,
-        .stApp[data-theme="dark"] h1,
-        .stApp[data-theme="dark"] h2,
-        .stApp[data-theme="dark"] h3,
-        .stApp[data-theme="dark"] h4 {
-            color: #FFFFFF !important;
-        }
-        /* Additional specific styles for form elements */
-        .stApp[data-theme="dark"] .stTextInput > div > div {
-            background-color: #3B3B3B;
-        }
-        .stApp[data-theme="dark"] .stProgress > div > div {
-            background-color: #4F8BF9;
+        div.stButton button {
+            float: right;
+            margin-right: 10px;
+            background-color: transparent;
+            border: 1px solid rgba(49, 51, 63, 0.2);
         }
         </style>
     """, unsafe_allow_html=True)
 
     # Theme toggle button in top-right corner
-    with st.container():
-        col1, col2 = st.columns([6, 1])
-        with col2:
-            theme_icon = "🌙" if st.session_state.theme == 'light' else "☀️"
-            st.markdown(f'<div class="theme-toggle">', unsafe_allow_html=True)
-            if st.button(f"{theme_icon} Theme"):
-                toggle_theme()
-            st.markdown('</div>', unsafe_allow_html=True)
-
-    # Apply theme based on session state
-    if st.session_state.theme == 'dark':
-        st.markdown("""
-            <style>
-                .stApp {
-                    background-color: #262730;
-                }
-            </style>
-        """, unsafe_allow_html=True)
+    col1, col2 = st.columns([6, 1])
+    with col2:
+        theme_icon = "🌙" if st.session_state.theme == 'light' else "☀️"
+        if st.button(f"{theme_icon} Theme"):
+            toggle_theme()
 
     st.title("Website Cost Estimator")
     st.write("Enter a website URL to get development and maintenance cost estimates")
