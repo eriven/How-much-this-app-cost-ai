@@ -4,6 +4,14 @@ from utils.website_analyzer import analyze_website
 from utils.cost_calculator import calculate_costs
 import time
 
+def format_size(size_bytes):
+    """Format content length to human readable size"""
+    for unit in ['chars', 'K chars', 'M chars']:
+        if size_bytes < 1000:
+            return f"{size_bytes:.1f} {unit}"
+        size_bytes /= 1000
+    return f"{size_bytes:.1f} G chars"
+
 def main():
     st.set_page_config(
         page_title="Website Cost Estimator",
@@ -56,9 +64,50 @@ def main():
                     st.write("- Updates")
                     st.write("- Security patches")
 
-                # Display complexity metrics
+                # Display complexity metrics with improved UI
                 st.subheader("Website Complexity Analysis")
-                st.json(complexity_metrics)
+                
+                # Overall complexity score with progress bar
+                st.write("### Overall Complexity")
+                complexity_score = complexity_metrics['complexity_score']
+                st.progress(complexity_score / 10)
+                st.metric("Complexity Score", f"{complexity_score:.1f}/10")
+                
+                # Create two columns for metrics
+                metrics_col1, metrics_col2 = st.columns(2)
+                
+                with metrics_col1:
+                    st.write("### Size Metrics")
+                    st.metric(
+                        "Content Size", 
+                        format_size(complexity_metrics['content_length']),
+                        help="Total amount of content found on the website"
+                    )
+                    st.metric(
+                        "Estimated Pages",
+                        complexity_metrics['estimated_pages'],
+                        help="Approximate number of pages the website contains"
+                    )
+                
+                with metrics_col2:
+                    st.write("### Feature Detection")
+                    # Create a card-like container for features
+                    with st.container():
+                        features_data = {
+                            "Forms": complexity_metrics['has_forms'],
+                            "Authentication": complexity_metrics['has_authentication'],
+                            "Dynamic Content": complexity_metrics['has_dynamic_content']
+                        }
+                        
+                        for feature, has_feature in features_data.items():
+                            col1, col2 = st.columns([3, 1])
+                            with col1:
+                                st.write(f"**{feature}:**")
+                            with col2:
+                                if has_feature:
+                                    st.success("Yes")
+                                else:
+                                    st.error("No")
 
             except Exception as e:
                 st.error(f"Error analyzing website: {str(e)}")
