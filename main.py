@@ -46,32 +46,30 @@ def main():
         .stApp[data-theme="dark"] {
             background-color: #262730;
         }
-        .stApp[data-theme="dark"] p,
-        .stApp[data-theme="dark"] span,
-        .stApp[data-theme="dark"] li {
+        /* Make all text white in dark mode */
+        .stApp[data-theme="dark"] * {
+            color: #FFFFFF;
+        }
+        /* Specific rules for different text elements */
+        .stApp[data-theme="dark"] .stMarkdown,
+        .stApp[data-theme="dark"] .stMarkdown p,
+        .stApp[data-theme="dark"] .stText,
+        .stApp[data-theme="dark"] .stMetric,
+        .stApp[data-theme="dark"] .stWrite,
+        .stApp[data-theme="dark"] .element-container,
+        .stApp[data-theme="dark"] .stSubheader,
+        .stApp[data-theme="dark"] h1,
+        .stApp[data-theme="dark"] h2,
+        .stApp[data-theme="dark"] h3,
+        .stApp[data-theme="dark"] h4 {
             color: #FFFFFF !important;
         }
-        .stApp[data-theme="dark"] .stMarkdown {
-            color: #FFFFFF !important;
-        }
-        .stApp[data-theme="dark"] .st-emotion-cache-metric-value {
-            color: #FFFFFF !important;
-        }
-        .stApp[data-theme="dark"] .st-emotion-cache-metric-delta {
-            color: #FFFFFF !important;
-        }
-        .stApp[data-theme="dark"] .st-emotion-cache-metric-label {
-            color: #FFFFFF !important;
+        /* Additional specific styles for form elements */
+        .stApp[data-theme="dark"] .stTextInput > div > div {
+            background-color: #3B3B3B;
         }
         .stApp[data-theme="dark"] .stProgress > div > div {
             background-color: #4F8BF9;
-        }
-        .stApp[data-theme="dark"] .stTextInput > div > div {
-            background-color: #3B3B3B;
-            color: #FFFFFF;
-        }
-        .stApp[data-theme="dark"] button {
-            color: #FFFFFF;
         }
         </style>
     """, unsafe_allow_html=True)
