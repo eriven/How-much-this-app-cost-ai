@@ -1,0 +1,3 @@
+streamlit==1.28.2
+trafilatura==1.6.2
+urllib3==2.1.0
