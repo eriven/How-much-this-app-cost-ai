@@ -12,7 +12,54 @@ def format_size(size_bytes):
         size_bytes /= 1000
     return f"{size_bytes:.1f} G chars"
 
+def initialize_session_state():
+    """Initialize session state variables"""
+    if 'theme' not in st.session_state:
+        st.session_state.theme = 'light'
+
+def toggle_theme():
+    """Toggle between light and dark theme"""
+    st.session_state.theme = 'dark' if st.session_state.theme == 'light' else 'light'
+
 def main():
+    initialize_session_state()
+
+    # Custom CSS for theme toggle button positioning
+    st.markdown("""
+        <style>
+        .theme-toggle {
+            position: fixed;
+            top: 14px;
+            right: 48px;
+            z-index: 999999;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    # Theme toggle button in top-right corner
+    with st.container():
+        col1, col2 = st.columns([6, 1])
+        with col2:
+            theme_icon = "🌙" if st.session_state.theme == 'light' else "☀️"
+            st.markdown(f'<div class="theme-toggle">', unsafe_allow_html=True)
+            if st.button(f"{theme_icon} Theme"):
+                toggle_theme()
+            st.markdown('</div>', unsafe_allow_html=True)
+
+    # Apply theme based on session state
+    if st.session_state.theme == 'dark':
+        st.markdown("""
+            <style>
+                .stApp {
+                    background-color: #262730;
+                    color: #FFFFFF;
+                }
+                .stTextInput > div > div {
+                    background-color: #3B3B3B;
+                }
+            </style>
+        """, unsafe_allow_html=True)
+
     st.set_page_config(
         page_title="Website Cost Estimator",
         page_icon="💰",
