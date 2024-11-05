@@ -12,47 +12,12 @@ def format_size(size_bytes):
         size_bytes /= 1000
     return f"{size_bytes:.1f} G chars"
 
-def initialize_session_state():
-    """Initialize session state variables"""
-    if 'theme' not in st.session_state:
-        st.session_state.theme = 'light'
-
-def toggle_theme():
-    """Toggle between light and dark theme"""
-    st.session_state.theme = 'dark' if st.session_state.theme == 'light' else 'light'
-
 def main():
-    # Initialize session state
-    initialize_session_state()
-    
-    # Set page config must be the first Streamlit command
     st.set_page_config(
         page_title="Website Cost Estimator",
         page_icon="💰",
         layout="wide"
     )
-
-    # Custom CSS for theme toggle button positioning
-    st.markdown("""
-        <style>
-        div.stButton {
-            position: fixed;
-            top: 14px;
-            right: 48px;
-            z-index: 999999;
-        }
-        div.stButton button {
-            background-color: transparent;
-            border: 1px solid rgba(49, 51, 63, 0.2);
-        }
-        </style>
-    """, unsafe_allow_html=True)
-
-    # Theme toggle button in top-right corner
-    theme_icon = "🌙" if st.session_state.theme == 'light' else "☀️"
-    if st.button(f"{theme_icon} Theme"):
-        toggle_theme()
-        st.experimental_rerun()
 
     st.title("Website Cost Estimator")
     st.write("Enter a website URL to get development and maintenance cost estimates")
