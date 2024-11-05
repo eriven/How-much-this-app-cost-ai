@@ -32,7 +32,7 @@ def main():
     # Initialize session state
     initialize_session_state()
 
-    # Custom CSS for theme toggle button positioning
+    # Custom CSS for theme toggle button positioning and dark mode
     st.markdown("""
         <style>
         .theme-toggle {
@@ -40,6 +40,38 @@ def main():
             top: 14px;
             right: 48px;
             z-index: 999999;
+        }
+        
+        /* Dark mode styles */
+        .stApp[data-theme="dark"] {
+            background-color: #262730;
+        }
+        .stApp[data-theme="dark"] p,
+        .stApp[data-theme="dark"] span,
+        .stApp[data-theme="dark"] li {
+            color: #FFFFFF !important;
+        }
+        .stApp[data-theme="dark"] .stMarkdown {
+            color: #FFFFFF !important;
+        }
+        .stApp[data-theme="dark"] .st-emotion-cache-metric-value {
+            color: #FFFFFF !important;
+        }
+        .stApp[data-theme="dark"] .st-emotion-cache-metric-delta {
+            color: #FFFFFF !important;
+        }
+        .stApp[data-theme="dark"] .st-emotion-cache-metric-label {
+            color: #FFFFFF !important;
+        }
+        .stApp[data-theme="dark"] .stProgress > div > div {
+            background-color: #4F8BF9;
+        }
+        .stApp[data-theme="dark"] .stTextInput > div > div {
+            background-color: #3B3B3B;
+            color: #FFFFFF;
+        }
+        .stApp[data-theme="dark"] button {
+            color: #FFFFFF;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -60,10 +92,6 @@ def main():
             <style>
                 .stApp {
                     background-color: #262730;
-                    color: #FFFFFF;
-                }
-                .stTextInput > div > div {
-                    background-color: #3B3B3B;
                 }
             </style>
         """, unsafe_allow_html=True)
